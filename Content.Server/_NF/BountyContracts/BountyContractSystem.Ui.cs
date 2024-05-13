@@ -86,15 +86,14 @@ public sealed partial class BountyContractSystem
 
         return new BountyContractCreateUiState(bountyTargets.ToList(), vessels.ToList());
     }
-
+    
+// Контракты для всех - Корвакс
     private bool IsAllowedCreateBounties(EntityUid loaderUid, CartridgeLoaderComponent? component = null)
     {
-        if (!Resolve(loaderUid, ref component) || component.ActiveProgram == null)
-            return false;
-
-        return _accessReader.IsAllowed(loaderUid, component.ActiveProgram.Value);
+        return Resolve(loaderUid, ref component); 
     }
-
+// Так пусть и будет - Корвакс
+    
     private bool IsAllowedDeleteBounties(EntityUid loaderUid, CartridgeLoaderComponent? component = null)
     {
         return IsAllowedCreateBounties(loaderUid, component);
