@@ -322,8 +322,14 @@ public sealed partial class MapScreen : BoxContainer
             };
 
             _mapHeadings.Add(mapComp.MapId, gridContents);
+
+            // Corvax - не отображать астероиды start
+
             foreach (var grid in _mapManager.GetAllMapGrids(mapComp.MapId))
             {
+                if (_entManager.HasComponent<GCAbleObject>(grid.Owner))
+                    continue;
+
                 _entManager.TryGetComponent(grid.Owner, out IFFComponent? iffComp);
 
                 var gridObj = new GridMapObject()
@@ -344,6 +350,8 @@ public sealed partial class MapScreen : BoxContainer
                     _pendingMapObjects.Add((mapComp.MapId, gridObj));
                 }
             }
+
+            // Corvax - не отображать астероиды end
 
             foreach (var (beacon, _) in _shuttles.GetExclusions(mapComp.MapId, _exclusions))
             {
